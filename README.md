@@ -264,15 +264,29 @@ server {
 }
 ```
 
-### Docker
+### 🐳 Imagen Docker
+
+La imagen oficial está disponible en GitHub Container Registry:
+
+```bash
+# Última versión
+docker pull ghcr.io/opentracker-es/opentracker-trabajadores:latest
+
+# Versión específica
+docker pull ghcr.io/opentracker-es/opentracker-trabajadores:1.0.0
+```
+
+**Plataformas soportadas:** linux/amd64, linux/arm64
+
+### Docker Compose
 
 ```bash
 # Usando docker-compose
 docker-compose up -d
 
 # O construir manualmente
-docker build -t opentracker-webapp .
-docker run -p 80:80 opentracker-webapp
+docker build -t opentracker-trabajadores .
+docker run -p 80:80 opentracker-trabajadores
 ```
 
 ### Variables de Entorno en Producción
