@@ -19,21 +19,14 @@ RUN npm install --force && \
 # Copy source code
 COPY . .
 
-# Build arguments for environment variables
-ARG VITE_API_URL=https://jornada.codefriends.es/core
-ARG VITE_API_USERNAME
-ARG VITE_API_PASSWORD
-ARG VITE_APP_NAME="OpenTracker"
-ARG VITE_APP_LOGO="/logo.png"
-ARG VITE_BASE_PATH="/"
-
-# Set environment variables for build
-ENV VITE_API_URL=$VITE_API_URL
-ENV VITE_API_USERNAME=$VITE_API_USERNAME
-ENV VITE_API_PASSWORD=$VITE_API_PASSWORD
-ENV VITE_APP_NAME=$VITE_APP_NAME
-ENV VITE_APP_LOGO=$VITE_APP_LOGO
-ENV VITE_BASE_PATH=$VITE_BASE_PATH
+# Build with PLACEHOLDER values that will be replaced at runtime
+# This allows the same image to be used in different environments
+ENV VITE_API_URL=__VITE_API_URL__
+ENV VITE_API_USERNAME=__VITE_API_USERNAME__
+ENV VITE_API_PASSWORD=__VITE_API_PASSWORD__
+ENV VITE_APP_NAME=__VITE_APP_NAME__
+ENV VITE_APP_LOGO=__VITE_APP_LOGO__
+ENV VITE_BASE_PATH=__VITE_BASE_PATH__
 
 # Build the app
 RUN npm run build
@@ -47,8 +40,21 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy built app from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
+# Copy entrypoint script
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
 # Expose port 80
 EXPOSE 80
 
-# Start nginx
+# Default values for runtime (can be overridden)
+ENV VITE_API_URL=""
+ENV VITE_API_USERNAME=""
+ENV VITE_API_PASSWORD=""
+ENV VITE_APP_NAME="OpenTracker"
+ENV VITE_APP_LOGO="/logo.png"
+ENV VITE_BASE_PATH="/"
+
+# Use entrypoint to replace placeholders at runtime
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]

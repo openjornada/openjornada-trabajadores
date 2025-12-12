@@ -1,10 +1,10 @@
-# OpenTracker Webapp - Docker Image Build & Publish
+# OpenTracker Webapp (Trabajadores) - Docker Image Build & Publish
 # Este workflow construye y publica la imagen Docker en GitHub Container Registry
 # Se ejecuta automáticamente cuando se crea una nueva release
 #
-# IMPORTANTE: Configurar los siguientes secrets en GitHub:
-#   - VITE_API_USERNAME: Usuario API para autenticación
-#   - VITE_API_PASSWORD: Contraseña API para autenticación
+# La imagen usa placeholders que se reemplazan en runtime via docker-entrypoint.sh
+# Variables configurables: VITE_API_URL, VITE_API_USERNAME, VITE_API_PASSWORD,
+#                          VITE_APP_NAME, VITE_APP_LOGO, VITE_BASE_PATH
 #
 # Usa matrix strategy con runners nativos para builds multi-plataforma rápidos:
 # - linux/amd64 se construye en ubuntu-latest (x86)
@@ -77,13 +77,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=build-${{ env.PLATFORM_PAIR }}
           cache-to: type=gha,mode=max,scope=build-${{ env.PLATFORM_PAIR }}
-          build-args: |
-            VITE_API_URL=${{ vars.VITE_API_URL || 'https://api.opentracker.es' }}
-            VITE_API_USERNAME=${{ secrets.VITE_API_USERNAME }}
-            VITE_API_PASSWORD=${{ secrets.VITE_API_PASSWORD }}
-            VITE_APP_NAME=${{ vars.VITE_APP_NAME || 'OpenTracker' }}
-            VITE_APP_LOGO=${{ vars.VITE_APP_LOGO || '/logo.png' }}
-            VITE_BASE_PATH=${{ vars.VITE_BASE_PATH || '/' }}
           outputs: type=image,name=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
