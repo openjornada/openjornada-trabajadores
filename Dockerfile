@@ -19,14 +19,17 @@ RUN npm install --force && \
 # Copy source code
 COPY . .
 
-# Build with PLACEHOLDER values that will be replaced at runtime
-# This allows the same image to be used in different environments
+# VITE_BASE_PATH MUST be set at build time (affects asset URLs)
+# Use "/" for root path or "/trabajadores" for subpath
+ARG VITE_BASE_PATH="/"
+
+# Build with PLACEHOLDER values for runtime-configurable vars
 ENV VITE_API_URL=__VITE_API_URL__
 ENV VITE_API_USERNAME=__VITE_API_USERNAME__
 ENV VITE_API_PASSWORD=__VITE_API_PASSWORD__
 ENV VITE_APP_NAME=__VITE_APP_NAME__
 ENV VITE_APP_LOGO=__VITE_APP_LOGO__
-ENV VITE_BASE_PATH=__VITE_BASE_PATH__
+ENV VITE_BASE_PATH=$VITE_BASE_PATH
 
 # Build the app
 RUN npm run build
@@ -53,7 +56,6 @@ ENV VITE_API_USERNAME=""
 ENV VITE_API_PASSWORD=""
 ENV VITE_APP_NAME="OpenTracker"
 ENV VITE_APP_LOGO="/logo.png"
-ENV VITE_BASE_PATH="/"
 
 # Use entrypoint to replace placeholders at runtime
 ENTRYPOINT ["/docker-entrypoint.sh"]

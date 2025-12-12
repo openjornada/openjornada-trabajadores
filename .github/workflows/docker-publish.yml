@@ -3,8 +3,8 @@
 # Se ejecuta automáticamente cuando se crea una nueva release
 #
 # La imagen usa placeholders que se reemplazan en runtime via docker-entrypoint.sh
-# Variables configurables: VITE_API_URL, VITE_API_USERNAME, VITE_API_PASSWORD,
-#                          VITE_APP_NAME, VITE_APP_LOGO, VITE_BASE_PATH
+# Variables runtime: VITE_API_URL, VITE_API_USERNAME, VITE_API_PASSWORD, VITE_APP_NAME, VITE_APP_LOGO
+# Variable build-time: VITE_BASE_PATH (Vite requiere que sea válido en build)
 #
 # Usa matrix strategy con runners nativos para builds multi-plataforma rápidos:
 # - linux/amd64 se construye en ubuntu-latest (x86)
@@ -77,6 +77,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=build-${{ env.PLATFORM_PAIR }}
           cache-to: type=gha,mode=max,scope=build-${{ env.PLATFORM_PAIR }}
+          build-args: |
+            VITE_BASE_PATH=${{ vars.VITE_BASE_PATH || '/' }}
           outputs: type=image,name=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
