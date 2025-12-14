@@ -8,8 +8,11 @@ export default defineConfig(({ mode }) => {
   // This loads variables from .env files for local development
   const env = loadEnv(mode, process.cwd(), '')
 
+  // Base path for the app (e.g., '/trabajadores/' in production)
+  const basePath = env.VITE_BASE_PATH || process.env.VITE_BASE_PATH || '/'
+
   return {
-    base: env.VITE_BASE_PATH || process.env.VITE_BASE_PATH || '/',
+    base: basePath,
     plugins: [
       react(),
       VitePWA({
@@ -22,7 +25,8 @@ export default defineConfig(({ mode }) => {
           theme_color: '#ffffff',
           background_color: '#ffffff',
           display: 'standalone',
-          start_url: '/',
+          start_url: basePath,
+          scope: basePath,
           icons: [
             {
               src: 'web-app-manifest-192x192.png',
