@@ -3,6 +3,7 @@ import CreateTimeRecord from "./CreateTimeRecord";
 import CreateIncident from "./CreateIncident";
 import CreateChangeRequest from "./CreateChangeRequest";
 import Settings from "./Settings";
+import Help from "./Help";
 import PrivacyModal from "./PrivacyModal";
 import Footer from "./Footer";
 
@@ -16,7 +17,7 @@ interface DashboardProps {
   onLogout: () => void;
 }
 
-type View = "menu" | "time-record" | "incident" | "change-request" | "settings";
+type View = "menu" | "time-record" | "incident" | "change-request" | "settings" | "help";
 
 const PRIVACY_ACCEPTED_KEY = "opentracker_privacy_accepted";
 
@@ -71,6 +72,12 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, appName, onLogout }) =>
           <Settings
             email={userData.email}
             password={userData.password}
+            onBack={() => setCurrentView("menu")}
+          />
+        );
+      case "help":
+        return (
+          <Help
             onBack={() => setCurrentView("menu")}
           />
         );
@@ -161,6 +168,26 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, appName, onLogout }) =>
                 />
               </svg>
               Ajustes
+            </button>
+
+            <button
+              onClick={() => setCurrentView("help")}
+              className="w-full h-16 bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 rounded-lg flex items-center px-6 text-base font-medium transition-colors shadow-sm"
+            >
+              <svg
+                className="w-5 h-5 mr-3 text-blue-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              Ayuda
             </button>
           </div>
         );
