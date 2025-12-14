@@ -95,6 +95,8 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({
                     <input
                       type="email"
                       id="email"
+                      name="email"
+                      autoComplete="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="shadow appearance-none border rounded w-full py-3 px-4 pl-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"

@@ -117,6 +117,8 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ appName, appLogo }) => {
                     <input
                       type="password"
                       id="new-password"
+                      name="new-password"
+                      autoComplete="new-password"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       className="shadow appearance-none border rounded w-full py-3 px-4 pl-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
@@ -153,6 +155,8 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ appName, appLogo }) => {
                     <input
                       type="password"
                       id="confirm-password"
+                      name="confirm-password"
+                      autoComplete="new-password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       className="shadow appearance-none border rounded w-full py-3 px-4 pl-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
