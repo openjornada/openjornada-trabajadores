@@ -11,6 +11,9 @@ export default defineConfig(({ mode }) => {
   // Base path for the app (e.g., '/trabajadores/' in production)
   const basePath = env.VITE_BASE_PATH || process.env.VITE_BASE_PATH || '/'
 
+  // App name for PWA manifest and title
+  const appName = env.VITE_APP_NAME || process.env.VITE_APP_NAME || 'OpenTracker'
+
   return {
     base: basePath,
     plugins: [
@@ -19,8 +22,8 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         includeAssets: ['favicon.ico', 'favicon.svg', 'favicon-96x96.png', 'apple-touch-icon.png'],
         manifest: {
-          name: 'OpenTracker - Registro de Jornada',
-          short_name: 'OpenTracker',
+          name: `${appName} - Registro de Jornada`,
+          short_name: appName,
           description: 'Sistema de registro de jornada laboral',
           theme_color: '#ffffff',
           background_color: '#ffffff',
