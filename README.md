@@ -397,6 +397,10 @@ Ninguno actualmente. Reporta issues en GitHub.
 
 GNU Affero General Public License v3.0 (AGPL-3.0) - Ver archivo LICENSE en la raíz del proyecto.
 
+## 👨‍💻 Autor
+
+OpenJornada es un proyecto desarrollado por **[HappyAndroids](https://happyandroids.com)**.
+
 ## 🤝 Contribuciones
 
 Las contribuciones son bienvenidas. Por favor abre un issue antes de hacer cambios grandes.
@@ -404,9 +408,10 @@ Las contribuciones son bienvenidas. Por favor abre un issue antes de hacer cambi
 ## 🔗 Enlaces
 
 - **Sitio web**: [www.openjornada.es](https://www.openjornada.es)
+- **Desarrollado por**: [HappyAndroids](https://happyandroids.com)
 - **Email**: info@openjornada.es
 
 ---
 
-Parte del proyecto [OpenJornada](https://www.openjornada.es)
+Un proyecto de [HappyAndroids](https://happyandroids.com) | [OpenJornada](https://www.openjornada.es)
 
