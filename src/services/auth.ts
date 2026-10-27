@@ -1,11 +1,12 @@
 import i18n from '../i18n';
+import { config } from '../config';
 import { getApiErrorMessage } from './errorMessages';
 import {
   SubscriptionBlockedError,
   emitSubscriptionBlocked,
 } from './errors';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_URL = config.apiUrl;
 
 export interface WorkerLoginCredentials {
   email: string;

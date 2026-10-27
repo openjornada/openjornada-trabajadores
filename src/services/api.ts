@@ -1,4 +1,5 @@
 import axios from "axios";
+import { config } from "../config";
 import i18n from "../i18n";
 import { emitSubscriptionBlocked } from "./errors";
 import { getApiErrorMessage } from "./errorMessages";
@@ -36,9 +37,9 @@ import {
   WorkerLanguageResponse,
 } from "../types";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
-const API_USERNAME = import.meta.env.VITE_API_USERNAME;
-const API_PASSWORD = import.meta.env.VITE_API_PASSWORD;
+const API_URL = config.apiUrl;
+const API_USERNAME = config.apiUsername;
+const API_PASSWORD = config.apiPassword;
 
 class ApiService {
   private token: string | null = null;

@@ -289,11 +289,8 @@ docker pull ghcr.io/openjornada/openjornada-trabajadores:1.0.0
 
 ### Variables de Entorno en Docker
 
-La imagen soporta dos tipos de variables:
-
-#### Variables Runtime (configurables en docker-compose)
-
-Estas variables se pueden cambiar **sin reconstruir la imagen**:
+Estas variables se configuran en `docker-compose` y se inyectan en `config.js` al iniciar
+el contenedor, por lo que pueden cambiarse **sin reconstruir la imagen**:
 
 | Variable | Descripción | Default |
 |----------|-------------|---------|
@@ -316,19 +313,19 @@ services:
       - VITE_APP_LOGO=/mi-logo.png
 ```
 
-#### Variables Build-time (requieren reconstruir imagen)
+#### Variable de build (requiere reconstruir la imagen)
 
-Estas variables se configuran en **GitHub Actions** como repository variables:
+Solo `VITE_BASE_PATH` se fija durante el build:
 
 | Variable | Descripción | Default |
 |----------|-------------|---------|
 | `VITE_BASE_PATH` | Path base para routing (ej: `/trabajadores`) | `/` |
 
-Para cambiar el `basePath`, actualiza la variable en GitHub → Settings → Secrets and variables → Actions → Variables, y ejecuta el workflow.
+Para cambiar el `basePath`, actualiza la variable en GitHub → Settings → Secrets and variables → Actions → Variables, y ejecuta el workflow. Al construir manualmente, pásala como argumento, por ejemplo `docker build --build-arg VITE_BASE_PATH=/trabajadores/ .`.
 
 ### Cómo funciona
 
-La imagen usa un `docker-entrypoint.sh` que reemplaza placeholders con los valores de las variables de entorno al iniciar el contenedor. Esto permite usar la misma imagen en diferentes entornos.
+El entrypoint genera `config.js` con las variables runtime cuando arranca el contenedor. `VITE_API_URL`, `VITE_API_USERNAME`, `VITE_API_PASSWORD`, `VITE_APP_NAME` y `VITE_APP_LOGO` ya no tienen efecto como argumentos de build; solo `VITE_BASE_PATH` se configura al construir la imagen.
 
 ### Docker Compose
 
@@ -428,4 +425,3 @@ Las contribuciones son bienvenidas. Por favor abre un issue antes de hacer cambi
 ---
 
 Un proyecto de [HappyAndroids](https://happyandroids.com) | [OpenJornada](https://www.openjornada.es)
-

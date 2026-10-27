@@ -23,12 +23,7 @@ COPY . .
 # Use "/" for root path or "/trabajadores" for subpath
 ARG VITE_BASE_PATH="/"
 
-# Build with PLACEHOLDER values for runtime-configurable vars
-ENV VITE_API_URL=__VITE_API_URL__
-ENV VITE_API_USERNAME=__VITE_API_USERNAME__
-ENV VITE_API_PASSWORD=__VITE_API_PASSWORD__
-ENV VITE_APP_NAME=__VITE_APP_NAME__
-ENV VITE_APP_LOGO=__VITE_APP_LOGO__
+# VITE_BASE_PATH affects asset URLs and must be fixed at build time.
 ENV VITE_BASE_PATH=$VITE_BASE_PATH
 
 # Build the app
@@ -57,6 +52,6 @@ ENV VITE_API_PASSWORD=""
 ENV VITE_APP_NAME="OpenJornada"
 ENV VITE_APP_LOGO="/logo.png"
 
-# Use entrypoint to replace placeholders at runtime
+# Generate runtime configuration at container startup.
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]

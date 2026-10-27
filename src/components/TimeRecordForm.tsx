@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { config } from "../config";
 import apiService from "../services/api";
 import { TimeRecordResponse } from "../types";
 
@@ -23,8 +24,8 @@ const TimeRecordForm: React.FC = () => {
   useEffect(() => {
     const checkConfig = () => {
       if (
-        !import.meta.env.VITE_API_USERNAME ||
-        !import.meta.env.VITE_API_PASSWORD
+        !config.apiUsername ||
+        !config.apiPassword
       ) {
         setConfigError(
           "API credentials not configured. Please check your .env file.",

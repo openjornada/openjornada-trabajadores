@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { config } from './config';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import ForgotPassword from './components/ForgotPassword';
@@ -18,8 +19,8 @@ interface UserData {
 }
 
 function MainApp() {
-  const appName = import.meta.env.VITE_APP_NAME || 'Time Tracking';
-  const appLogo = import.meta.env.VITE_APP_LOGO || '';
+  const appName = config.appName;
+  const appLogo = config.appLogo;
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 

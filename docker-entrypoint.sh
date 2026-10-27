@@ -1,32 +1,24 @@
 #!/bin/sh
-# Runtime environment variable replacement for Vite app
-# Replaces __PLACEHOLDER__ values with actual environment variables
-#
-# NOTE: VITE_BASE_PATH is NOT replaceable at runtime because
-# Vite uses it for asset URLs at build time
+# Write runtime environment configuration for the Vite app.
+# NOTE: VITE_BASE_PATH is fixed at build time because Vite uses it for asset URLs.
 
 set -e
 
-# Define placeholders and their corresponding env vars
-replace_placeholder() {
-    local placeholder=$1
-    local value=$2
-
-    if [ -n "$value" ]; then
-        echo "Replacing $placeholder with runtime value"
-        # Replace in all JS and HTML files
-        find /usr/share/nginx/html -type f \( -name "*.js" -o -name "*.html" \) -exec sed -i "s|$placeholder|$value|g" {} + 2>/dev/null || true
-    fi
+js_escape() {
+    printf '%s' "$1" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g'
 }
 
-# Replace all placeholders with runtime environment variables
-replace_placeholder "__VITE_API_URL__" "${VITE_API_URL:-}"
-replace_placeholder "__VITE_API_USERNAME__" "${VITE_API_USERNAME:-}"
-replace_placeholder "__VITE_API_PASSWORD__" "${VITE_API_PASSWORD:-}"
-replace_placeholder "__VITE_APP_NAME__" "${VITE_APP_NAME:-OpenJornada}"
-replace_placeholder "__VITE_APP_LOGO__" "${VITE_APP_LOGO:-/logo.png}"
+{
+    printf 'window.__APP_CONFIG__ = {\n'
+    printf '  apiUrl: "%s",\n' "$(js_escape "${VITE_API_URL:-}")"
+    printf '  apiUsername: "%s",\n' "$(js_escape "${VITE_API_USERNAME:-}")"
+    printf '  apiPassword: "%s",\n' "$(js_escape "${VITE_API_PASSWORD:-}")"
+    printf '  appName: "%s",\n' "$(js_escape "${VITE_APP_NAME:-OpenJornada}")"
+    printf '  appLogo: "%s"\n' "$(js_escape "${VITE_APP_LOGO:-/logo.png}")"
+    printf '};\n'
+} > /usr/share/nginx/html/config.js
 
-echo "Environment variables injected successfully"
+echo "Runtime configuration generated"
 
 # Execute nginx
 exec "$@"

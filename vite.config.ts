@@ -54,10 +54,19 @@ export default defineConfig(({ mode }) => {
         workbox: {
           // Cache de archivos estáticos (JS, CSS, imágenes)
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+          globIgnores: ['**/config.js'],
           // No cachear llamadas a la API
           navigateFallback: 'index.html',
           navigateFallbackDenylist: [/^\/api/],
           runtimeCaching: [
+            {
+              urlPattern: ({ url }) => url.pathname.endsWith('/config.js'),
+              handler: 'NetworkFirst',
+              options: {
+                cacheName: 'app-config',
+                networkTimeoutSeconds: 3
+              }
+            },
             {
               // Siempre ir a la red para la API
               urlPattern: /^https?:\/\/.*\/api\/.*/i,
@@ -80,24 +89,6 @@ export default defineConfig(({ mode }) => {
       host: true
     },
     define: {
-      // For Docker/production builds, use process.env
-      // For local dev, Vite will use .env files automatically
-      // We only define these if they exist in process.env (Docker scenario)
-      ...(process.env.VITE_API_URL && {
-        'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL)
-      }),
-      ...(process.env.VITE_API_USERNAME && {
-        'import.meta.env.VITE_API_USERNAME': JSON.stringify(process.env.VITE_API_USERNAME)
-      }),
-      ...(process.env.VITE_API_PASSWORD && {
-        'import.meta.env.VITE_API_PASSWORD': JSON.stringify(process.env.VITE_API_PASSWORD)
-      }),
-      ...(process.env.VITE_APP_NAME && {
-        'import.meta.env.VITE_APP_NAME': JSON.stringify(process.env.VITE_APP_NAME)
-      }),
-      ...(process.env.VITE_APP_LOGO && {
-        'import.meta.env.VITE_APP_LOGO': JSON.stringify(process.env.VITE_APP_LOGO)
-      }),
       ...(process.env.VITE_BASE_PATH && {
         'import.meta.env.VITE_BASE_PATH': JSON.stringify(process.env.VITE_BASE_PATH)
       }),

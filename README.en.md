@@ -289,11 +289,8 @@ docker pull ghcr.io/openjornada/openjornada-trabajadores:1.0.0
 
 ### Docker Environment Variables
 
-The image supports two types of variables:
-
-#### Runtime Variables (configurable in docker-compose)
-
-These variables can be changed **without rebuilding the image**:
+These variables are set in `docker-compose` and injected into `config.js` when the
+container starts, so they can be changed **without rebuilding the image**:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
@@ -316,19 +313,22 @@ services:
       - VITE_APP_LOGO=/my-logo.png
 ```
 
-#### Build-time Variables (require image rebuild)
+#### Build-time Variable (requires an image rebuild)
 
-These variables are configured in **GitHub Actions** as repository variables:
+Only `VITE_BASE_PATH` is fixed at build time:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `VITE_BASE_PATH` | Base path for routing (e.g., `/trabajadores`) | `/` |
 
-To change the `basePath`, update the variable in GitHub → Settings → Secrets and variables → Actions → Variables, and run the workflow.
+To change the `basePath`, update the variable in GitHub → Settings → Secrets and variables → Actions → Variables, and run the workflow. For a manual build, pass it as a build argument, e.g. `docker build --build-arg VITE_BASE_PATH=/trabajadores/ .`.
 
 ### How It Works
 
-The image uses a `docker-entrypoint.sh` that replaces placeholders with environment variable values when the container starts. This allows using the same image in different environments.
+The entrypoint generates `config.js` from the runtime environment variables when the
+container starts. `VITE_API_URL`, `VITE_API_USERNAME`, `VITE_API_PASSWORD`,
+`VITE_APP_NAME`, and `VITE_APP_LOGO` no longer have any effect as build arguments; only
+`VITE_BASE_PATH` is configured when building the image.
 
 ### Docker Compose
 

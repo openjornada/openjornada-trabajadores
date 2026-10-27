@@ -11,3 +11,13 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+interface Window {
+  __APP_CONFIG__?: {
+    apiUrl?: string;
+    apiUsername?: string;
+    apiPassword?: string;
+    appName?: string;
+    appLogo?: string;
+  };
+}
