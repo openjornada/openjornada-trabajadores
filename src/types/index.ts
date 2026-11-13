@@ -113,6 +113,8 @@ export interface Company {
   deleted_by?: string;
   // Opt-in del módulo de ausencias/vacaciones (gating de la sección en la webapp).
   absence_management_enabled?: boolean;
+  // Opt-in del módulo de planificación de turnos (gating de «Mis turnos»).
+  shift_planning_enabled?: boolean;
   // Idioma de notificaciones de la empresa (fuente de herencia del locale UI).
   notification_language?: string;
 }
@@ -377,4 +379,24 @@ export interface TeamCalendarEntry {
 
 export interface AttachmentUploadResponse {
   attachment_id: string;
+}
+
+// Planificación de turnos: versión publicada que ve el trabajador.
+// Fecha y horas locales; end_time <= start_time = termina al día siguiente.
+export interface WorkerPlannedShift {
+  shift_type_id: string | null;
+  name: string | null;
+  short_code: string | null;
+  color: string | null;
+  start_time: string;
+  end_time: string;
+  break_minutes: number;
+}
+
+export interface MyShiftPlanResponse {
+  company_id: string;
+  company_name: string;
+  start_date: string;
+  end_date: string;
+  days: { date: string; shifts: WorkerPlannedShift[] }[];
 }

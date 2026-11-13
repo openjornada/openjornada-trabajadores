@@ -108,6 +108,7 @@
       "monthlyReport": "View monthly report",
       "monthlySignature": "Sign monthly records",
       "absences": "Absences and vacations",
+      "shiftPlan": "My shifts",
       "settings": "Settings",
       "help": "Help"
     }
@@ -341,6 +342,17 @@
       "empty": "No absences scheduled for this period.",
       "loadError": "Error loading the calendar"
     }
+  },
+  "shiftPlan": {
+    "title": "My shifts",
+    "previousWeek": "← Previous",
+    "nextWeek": "Next →",
+    "empty": "No published shifts for this week.",
+    "dayOff": "No shift",
+    "nextDay": "ends the next day",
+    "custom": "Shift",
+    "break": "{{minutes}} min break",
+    "loadError": "Your shifts could not be loaded."
   },
   "settings": {
     "title": "Settings",
@@ -594,6 +606,21 @@
       "not_found": "The requested resource was not found.",
       "conflict": "This record has already been processed.",
       "server_error": "Server error. Please try again later."
+    },
+    "shift_plan": {
+      "company_not_found": "The company does not exist or the identifier is invalid.",
+      "module_disabled": "Shift planning is not enabled for this company.",
+      "shift_type_not_found": "The shift type does not exist.",
+      "worker_not_found": "The worker does not belong to the company or has been removed.",
+      "overlap": "The shifts overlap.",
+      "warnings_not_acknowledged": "The roster has warnings that must be acknowledged before publishing.",
+      "range_too_long": "The date range cannot exceed 42 days.",
+      "invalid_range": "The end date is before the start date.",
+      "overlapping_weeks": "The source and target weeks overlap.",
+      "too_many_shifts": "Too many shifts on the same day.",
+      "incomplete_shift": "Choose a shift type or enter start and end times.",
+      "invalid_time_range": "Start and end times cannot be the same.",
+      "invalid_break": "The break must be shorter than the shift."
     }
   }
 }

@@ -7,6 +7,7 @@ import MyChangeRequests from "./MyChangeRequests";
 import MonthlyReport from "./MonthlyReport";
 import MonthlySignature from "./MonthlySignature";
 import AbsencesSection from "./AbsencesSection";
+import MyShiftPlan from "./MyShiftPlan";
 import Settings from "./Settings";
 import Help from "./Help";
 import InAppLanguageSelector from "./InAppLanguageSelector";
@@ -25,7 +26,7 @@ interface DashboardProps {
   onLogout: () => void;
 }
 
-type View = "menu" | "time-record" | "incident" | "change-request" | "my-change-requests" | "monthly-report" | "monthly-signature" | "absences" | "settings" | "help";
+type View = "menu" | "time-record" | "incident" | "change-request" | "my-change-requests" | "monthly-report" | "monthly-signature" | "absences" | "shift-plan" | "settings" | "help";
 
 const PRIVACY_ACCEPTED_KEY = "openjornada_privacy_accepted";
 
@@ -38,6 +39,8 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, appName, onLogout }) =>
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   // Empresas del trabajador con el módulo de ausencias activo (gating opt-in, tarea 6.7).
   const [absenceCompanies, setAbsenceCompanies] = useState<Company[]>([]);
+  // Ídem para «Mis turnos» (shift_planning_enabled).
+  const [shiftPlanCompanies, setShiftPlanCompanies] = useState<Company[]>([]);
 
   useEffect(() => {
     // Check if user has already accepted the privacy notice
@@ -56,6 +59,7 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, appName, onLogout }) =>
       .then((companies) => {
         if (active) {
           setAbsenceCompanies(companies.filter((c) => c.absence_management_enabled));
+          setShiftPlanCompanies(companies.filter((c) => c.shift_planning_enabled));
         }
       })
       .catch(() => {
@@ -82,6 +86,7 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, appName, onLogout }) =>
   const handleGoMonthlyReport = () => setCurrentView("monthly-report");
   const handleGoMonthlySignature = () => setCurrentView("monthly-signature");
   const handleGoAbsences = () => setCurrentView("absences");
+  const handleGoShiftPlan = () => setCurrentView("shift-plan");
   const handleGoSettings = () => setCurrentView("settings");
   const handleGoHelp = () => setCurrentView("help");
   const handleBackToMenu = () => setCurrentView("menu");
@@ -143,6 +148,15 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, appName, onLogout }) =>
             userEmail={userData.email}
             userPassword={userData.password}
             companies={absenceCompanies}
+          />
+        );
+      case "shift-plan":
+        return (
+          <MyShiftPlan
+            onBack={handleBackToMenu}
+            userEmail={userData.email}
+            userPassword={userData.password}
+            companies={shiftPlanCompanies}
           />
         );
       case "settings":
@@ -280,6 +294,25 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, appName, onLogout }) =>
                   />
                 </svg>
                 {t("dashboard.menu.absences")}
+              </button>
+            )}
+
+            {shiftPlanCompanies.length > 0 && (
+              <button onClick={handleGoShiftPlan} className={MENU_BUTTON_CLASS}>
+                <svg
+                  className="w-5 h-5 mr-3 text-blue-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                  />
+                </svg>
+                {t("dashboard.menu.shiftPlan")}
               </button>
             )}
 

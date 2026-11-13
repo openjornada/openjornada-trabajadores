@@ -130,6 +130,12 @@ Puedes personalizar la aplicación con tu propio branding:
 - Calendario de equipo "quién está fuera"
 - La sección solo aparece si la empresa del trabajador tiene el módulo activo
 
+### Mis turnos (`MyShiftPlan.tsx`)
+- Turnos publicados de la semana, día a día, con horas, nombre y color del turno
+- Navegación por semanas y selector de empresa si hay varias con el módulo activo
+- Indica los turnos nocturnos que terminan al día siguiente
+- Solo aparece si alguna empresa del trabajador tiene activa la planificación de turnos
+
 ### Settings (`Settings.tsx`)
 - Formulario de cambio de contraseña
 - Validación: contraseña actual, nueva contraseña (mín. 6 caracteres)

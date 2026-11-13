@@ -130,6 +130,12 @@ You can customize the application with your own branding:
 - Team calendar showing who is out
 - The section only appears if the worker's company has the module enabled
 
+### My Shifts (`MyShiftPlan.tsx`)
+- Published shifts for the week, day by day, with times, shift name and color
+- Week navigation and company selector when several companies have the module enabled
+- Marks night shifts that end the next day
+- Only shown if one of the worker's companies has shift planning enabled
+
 ### Settings (`Settings.tsx`)
 - Password change form
 - Validation: current password, new password (min. 6 characters)

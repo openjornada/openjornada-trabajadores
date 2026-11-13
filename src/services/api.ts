@@ -35,6 +35,7 @@ import {
   AbsenceTypeOption,
   WorkerProfileResponse,
   WorkerLanguageResponse,
+  MyShiftPlanResponse,
 } from "../types";
 
 const API_URL = config.apiUrl;
@@ -559,6 +560,28 @@ class ApiService {
       const response = await axios.post<WorkerAbsence[]>(
         `${API_URL}/api/absences/me`,
         body,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.apiError(error);
+    }
+  }
+
+  async getMyShiftPlan(
+    email: string,
+    password: string,
+    company_id: string,
+    start_date: string,
+    end_date: string,
+  ): Promise<MyShiftPlanResponse> {
+    if (!this.token) {
+      await this.authenticate();
+    }
+
+    try {
+      const response = await axios.post<MyShiftPlanResponse>(
+        `${API_URL}/api/shift-plans/me`,
+        { email, password, company_id, start_date, end_date },
       );
       return response.data;
     } catch (error) {

@@ -45,6 +45,7 @@ describe('translateErrorCode (registro error-codes.md, dominio worker)', () => {
       void i18n.changeLanguage(loc);
       expect(translateErrorCode('auth.invalid_credentials')).toBeDefined();
       expect(translateErrorCode('absence.validation_failed')).toBeDefined();
+      expect(translateErrorCode('shift_plan.module_disabled')).toBeDefined();
       expect(translateErrorCode('change_request.pending_exists')).toBeDefined();
       expect(translateErrorCode('sms.template_exceeds_segment')).toBeDefined();
       expect(translateErrorCode('company.has_workers')).toBeDefined();

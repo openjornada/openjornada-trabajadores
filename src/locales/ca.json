@@ -108,6 +108,7 @@
       "monthlyReport": "Consultar informe mensual",
       "monthlySignature": "Signar registres mensuals",
       "absences": "Absències i vacances",
+      "shiftPlan": "Els meus torns",
       "settings": "Ajustos",
       "help": "Ajuda"
     }
@@ -341,6 +342,17 @@
       "empty": "No hi ha absències previstes en aquest període.",
       "loadError": "Error en carregar el calendari"
     }
+  },
+  "shiftPlan": {
+    "title": "Els meus torns",
+    "previousWeek": "← Anterior",
+    "nextWeek": "Següent →",
+    "empty": "No hi ha torns publicats per a aquesta setmana.",
+    "dayOff": "Sense torn",
+    "nextDay": "acaba l'endemà",
+    "custom": "Torn",
+    "break": "{{minutes}} min de descans",
+    "loadError": "No s'han pogut carregar els teus torns."
   },
   "settings": {
     "title": "Ajustos",
@@ -594,6 +606,21 @@
       "not_found": "No s'ha trobat el recurs sol·licitat.",
       "conflict": "Aquest registre ja ha estat processat anteriorment.",
       "server_error": "Error del servidor. Torneu-ho a provar més tard."
+    },
+    "shift_plan": {
+      "company_not_found": "L'empresa no existeix o l'identificador no és vàlid.",
+      "module_disabled": "L'empresa no té activa la planificació de torns.",
+      "shift_type_not_found": "El tipus de torn no existeix.",
+      "worker_not_found": "El treballador no pertany a l'empresa o ha estat donat de baixa.",
+      "overlap": "Els torns se solapen.",
+      "warnings_not_acknowledged": "Hi ha avisos al quadrant que cal confirmar abans de publicar.",
+      "range_too_long": "El rang de dates no pot superar 42 dies.",
+      "invalid_range": "La data de fi és anterior a la d'inici.",
+      "overlapping_weeks": "La setmana d'origen i la de destinació se solapen.",
+      "too_many_shifts": "Massa torns el mateix dia.",
+      "incomplete_shift": "Indica un tipus de torn o les hores d'inici i fi.",
+      "invalid_time_range": "L'hora d'inici i la de fi no poden ser iguals.",
+      "invalid_break": "El descans ha de ser més curt que el torn."
     }
   }
 }
